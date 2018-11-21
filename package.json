@@ -1,0 +1,25 @@
+{
+  "name": "musicshare",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sorrelj/MusicShare.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sorrelj/MusicShare/issues"
+  },
+  "homepage": "https://github.com/sorrelj/MusicShare#readme",
+  "dependencies": {
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "materialize-css": "^1.0.0-rc.2",
+    "path": "^0.12.7"
+  }
+}
