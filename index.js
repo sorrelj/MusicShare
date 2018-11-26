@@ -14,7 +14,7 @@ app.get('/', (req, res) => {
     console.log('/ get request');
 
     return res.render(path.join(__dirname+'/views/index.html'))
-
+    
 });
 
 
