@@ -18,9 +18,6 @@ app.get('/', (req, res) => {
 });
 
 
-
-
-
 /*
  * App listen port: 8000
  * 
