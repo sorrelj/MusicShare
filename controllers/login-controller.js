@@ -1,4 +1,4 @@
-var crypto = require('crytpo')
+var crypto = require('crypto')
 require('dotenv').config();
 
 

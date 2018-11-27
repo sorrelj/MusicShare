@@ -2,6 +2,8 @@ const express = require('express')
 const app = express();
 const path = require('path')
 var session = require('express-session')
+var bodyParser = require('body-parser');
+
 require('dotenv').config();
 
 app.use(express.static('public'))
@@ -13,6 +15,8 @@ app.use(session({
   saveUninitialized: true,
   cookie: { maxAge: 60000 }
 }))
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json());
 
 /*
  * Controllers
@@ -63,7 +67,7 @@ app.get('/', (req, res) => {
  */ 
 
 //login
-app.post('/controllers/login-controller', )
+app.post('/controllers/login-controller', loginController.login)
 
 
 
