@@ -29,29 +29,35 @@
                 <li class="collection-header"><h4 style="text-align:center">Login</h4></li>
                 <li class="collection-item center-align">
                     <br><br>
-                    <div class="input-field" style="width:75%;margin:auto">
-                            <input id="user_name" type="text" class="validate">
-                            <label for="user_name">Username</label>
-                    </div>
-                    <br>
-                    <div class="input-field" style="width:75%;margin:auto">
-                        <input id="password" type="password" class="validate">
-                        <label for="password">Password</label>
-                    </div>
-                    <br><br>
-                    <button class="btn waves-effect waves-light" type="submit" id="signupbtn">Sign up
-                        <i class="material-icons right">person</i>
-                    </button>
                     
-                    <button class="btn waves-effect waves-light" type="submit" id="loginbtn">Login
-                            <i class="material-icons right">check</i>
+                    <form action="../controllers/login-controller" method="POST" id="login-form">
+                        <div class="input-field" style="width:75%;margin:auto">
+                                <input name="username" type="text" class="validate">
+                                <label for="user_name">Username</label>
+                        </div>
+                        <br>
+                        <div class="input-field" style="width:75%;margin:auto">
+                            <input name="password" type="password" class="validate">
+                            <label for="password">Password</label>
+                        </div>
+                    </form>
+                    <br><br>
+                    <button class="btn waves-effect waves-light" form="login-form" type="submit">Login
+                        <i class="material-icons right">check</i>
+                    </button>
+
+                    <br><br>
+
+                    <form action="../controllers/register-controller" method="POST" id="register-form">
+                    </form>
+                    <button class="btn waves-effect waves-light" form="register-form" type="submit" >Sign Up
+                            <i class="material-icons right">person</i>
                     </button>
                 </li>  
             </ul>
         </div>
 
 
-        <script type="text/javascript"src="home.js"></script>
         <!-- Compiled and minified JavaScript -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     </body>

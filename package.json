@@ -17,10 +17,12 @@
   },
   "homepage": "https://github.com/sorrelj/MusicShare#readme",
   "dependencies": {
+    "crypto": "^1.0.1",
     "ejs": "^2.6.1",
     "express": "^4.16.4",
     "express-session": "^1.15.6",
     "materialize-css": "^1.0.0-rc.2",
+    "mysql": "^2.16.0",
     "path": "^0.12.7"
   }
 }
