@@ -1,10 +1,12 @@
 const mysql = require('mysql')
+require('dotenv').config();
+
 
 var connection = mysql.createConnection({
-    host: 'musicshareapp.ccaamclrfsyt.us-east-2.rds.amazonaws.com',
-    user: 'sorrelj',
-    password: '!sorrelj29',
-    database: 'musicshare'
+    host: process.env.DATABASE_HOST,
+    user: process.env.DATABASE_USER,
+    password: process.env.DATABASE_PASS,
+    database: process.env.DATABASE_DATA
 })
 
 connection.connect(function(err){

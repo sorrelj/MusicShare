@@ -2,13 +2,13 @@ const express = require('express')
 const app = express();
 const path = require('path')
 var session = require('express-session')
-
+require('dotenv').config();
 
 app.use(express.static('public'))
 app.engine('html',require('ejs').renderFile)
 app.set('view engine','html');
 app.use(session({
-  secret: 'temp secret',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true,
   cookie: { maxAge: 60000 }
