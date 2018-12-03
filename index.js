@@ -72,14 +72,29 @@ app.get('/', (req, res) => {
  * 
  */
 app.get('/register', (req, res) => {
+    console.log('/register get request');
+
     if (req.query.status != null && req.query.status != '200'){
         //user alread exists
         if (req.query.status == '409'){
-
+            return res.render(path.join(__dirname+'/views/register.html'),
+            {
+                errmsg: 'User Already Exists!'
+            });
         //password requiremnets not met
-        }else if (req.query.status == '406')
+        }else if (req.query.status == '406'){
+            return res.render(path.join(__dirname+'/views/register.html'),
+            {
+                errmsg: 'Password must be at least 8 characters. Must contain at least 1 Uppercase character and a digit (0-9)'
+            });
+        }
     }
-}
+
+    return res.render(path.join(__dirname+'/views/register.html'),
+    {
+        errmsg: ''
+    });
+});
 
 /*
  * /home get request
@@ -94,6 +109,22 @@ app.get('/home', (req, res) => {
     }
 
     return res.render(path.join(__dirname+'/views/home.html'))
+
+});
+
+/*
+ * /signout get request
+ * 
+ */
+app.get('/signout', (req, res) => {
+    console.log('/signout get request');
+
+    if (!req.session.userid){
+        return res.redirect('/');
+    }
+
+    req.session.destroy();
+    return res.redirect('/');
 
 });
 

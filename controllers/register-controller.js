@@ -1,6 +1,6 @@
 require('dotenv').config();
 const crypto = require('crypto');
-var con = require('./../connect.js');
+var con = require('../connection.js');
 
 
 var connection = con.connection;
@@ -16,8 +16,7 @@ module.exports.register = function(req,res){
     var pass = req.body.password;
     if (pass.length < 8){
         //error
-        console.log("PASSWORD ERROR");
-        return res.status(403).send("Password must be a least 8 characters");
+        return res.redirect('/register?status=406');
     }
     var upper = false;
     var lower = false;
@@ -47,28 +46,35 @@ module.exports.register = function(req,res){
     var user = {
         "first_name":req.body.first_name,
         "last_name":req.body.last_name,
-        "user_name":req.body.username,
+        "user_name":req.body.user_name,
         "password":encStr,
         "created":currDate
     }
 
-    var runsql = 'SELECT user_name FROM user_creds WHERE user_name = \''+req.body.username+'\'';
+    var runsql = 'SELECT user_name FROM users WHERE user_name = \''+req.body.user_name+'\'';
 
     connection.query(runsql, function(error,results,fields){
         if (error){
-            return res.redirect('/error?status=Internal Server Error')
+            return res.redirect('/error?status=Internal 2Server Error')
         }
 
         //the username already exists 
         //send status 406
         if (results.length > 0){
             return res.redirect('/register?status=409');
+        }else{
+            connection.query('INSERT INTO users SET ?', user, function (err,results1,fields1){
+                if (err){
+                    console.log(err);
+                    return res.redirect('/error?status=Internal 3Server Error')
+                }
+
+                return res.redirect('/?status=200');
+            });
+            //return res.redirect('/error?status=Internal Server Error')
         }
 
-
     });
-    connection.query('INSERT INTO users SET ?', user, function (error,results,fields){
-        
-    });
+    
 
 }

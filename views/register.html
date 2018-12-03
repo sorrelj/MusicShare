@@ -23,7 +23,43 @@
             </div>
         </nav>
 
-        test test
+        <br><br>
+
+        <h4 class="center grey-text text-darken-3">Create New Account</h4>
+
+        <br><br><br>
+
+        <form action="../controllers/register-controller" method="POST" id="register-form">
+            <div class="input-field" style="width:35%;margin:auto">
+                <input placeholder="" name="first_name" type="text" class="validate">
+                <label for="first_name">First Name</label>
+            </div>
+            <br>
+            <div class="input-field" style="width:35%;margin:auto">
+                    <input placeholder="" name="last_name" type="text" class="validate">
+                    <label for="last_name">Last Name</label>
+            </div>
+            <br>
+            <div class="input-field" style="width:35%;margin:auto">
+                    <input placeholder="" name="user_name" type="text" class="validate">
+                    <label for="user_name">Username</label>
+            </div>
+            <br>
+            <div class="input-field" style="width:35%;margin:auto">
+                <input placeholder="" name="password" type="password" class="validate">
+                <label for="password">Password</label>
+            </div>
+        </form>
+        <br><br>
+        <div class="center">
+            <button class="btn waves-effect waves-light " form="register-form" type="submit">Create Account
+                <i class="material-icons right">check</i>
+            </button>
+        </div>
+
+
+        <br><br>
+        <div class="center" style="font-size: 12px;color: red"><%= errmsg %></div>
 
         <!-- Compiled and minified JavaScript -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
