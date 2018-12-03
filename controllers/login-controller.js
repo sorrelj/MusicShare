@@ -1,4 +1,5 @@
 var crypto = require('crypto')
+const path = require('path')
 require('dotenv').config();
 
 
@@ -15,8 +16,35 @@ module.exports.login = function(req, res){
     var password = req.body.password;
 
 
-    console.log('user: '+username);
-    console.log('pass: '+password);
+
+    connection.query('SELECT * from users WHERE user_name = ?', [username], function(error, results, fields){
+        if (error){
+            console.log('sql err')
+            return res.redirect('/error?status=Internal Server Error')
+        }
+
+        if (results.length > 0){
+            mykey.update(results[0].password,'hex','utf8');
+            decString = mykey.final('utf8');
+
+            if (password == decString){
+                req.session.userid = results[0].id;
+                return res.redirect('/home');
+            }else{
+                return res.redirect('/?status=404');
+            }
+
+        }else{
+
+            return res.redirect('/?status=404');
+        }
+
+    });
+
+
 
 
 }
+
+
+//insert into users (first_name, last_name, user_name, password, created)
