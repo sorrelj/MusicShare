@@ -33,7 +33,7 @@ app.use(bodyParser.json());
 var loginController = require('./controllers/login-controller');
 var registerController = require('./controllers/register-controller');
 var searchController = require('./controllers/search-controller');
-
+var followController = require('./controllers/follow-controller');
 
 
 
@@ -175,8 +175,19 @@ app.get('/home', (req, res) => {
 
     }
 
+    if (req.query.message){
+        return res.render(path.join(__dirname+'/views/home.html'),
+            {
+                msg: req.query.message
+            }
+        );
+    }
 
-    return res.render(path.join(__dirname+'/views/home.html'))
+    return res.render(path.join(__dirname+'/views/home.html'),
+        {
+            msg: ''
+        }
+    );
 
 });
 
@@ -269,6 +280,22 @@ app.get('/searchuser', (req, res) => {
 
 });
 
+/*
+ * /feeddata get request
+ * 
+ */
+app.get('/feeddata', (req, res) => {
+    console.log('/feeddata get request')
+
+    if (!req.session.userid){
+        console.log('not auth');
+        return res.redirect('/');
+    }
+
+    return res.send('yooooo');
+
+});
+
 
 
 /*====================================================================
@@ -282,6 +309,7 @@ app.get('/searchuser', (req, res) => {
 app.post('/controllers/login-controller', loginController.login)
 app.post('/controllers/register-controller', registerController.register);
 app.post('/controllers/search-controller',searchController.search);
+app.post('/controllers/follow-controller',followController.follow);
 
 
 

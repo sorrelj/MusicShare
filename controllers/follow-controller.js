@@ -5,29 +5,43 @@ var connection = con.connection;
 
 
 
-module.exports.search = function(req,res){
-    console.log('POST request - search');
+module.exports.follow = function(req,res){
+    console.log('POST request - follow');
 
     if (!req.body.username || req.body.username == ''){
         return res.redirect('/home');
     }
 
     var username = req.body.username;
+    var uid = req.session.userid;
 
-    var runsql = 'SELECT user_name FROM users WHERE user_name = \''+username+'\'';
+    var runsql = 'SELECT friends FROM users WHERE id = \''+uid+'\'';
 
     connection.query(runsql, function(error,results,fields){
         if (error){
-            return res.redirect('/error?status=Internal 2Server Error')
+            return res.redirect('/error?status=Internal Server Error')
         }
 
-        //the username already exists 
-        //send status 406
-        if (results.length == 0){
-            return res.redirect('/searchuser?status=404');
+        var newJSON = [];
+        var resp;
+        if (results[0].friends == null){
+            newJSON.push(username);
+
+            resp = JSON.stringify(newJSON);
         }else{
-            return res.redirect('/searchuser?status=200&username='+username);
+            newJSON = JSON.parse(results[0].friends);
+            newJSON.push(username);
+
+            resp = JSON.stringify(newJSON);
         }
+
+        var q2 = 'UPDATE users SET friends=\''+resp+'\' WHERE id='+uid;
+        connection.query(q2, function(error,results,fields){
+            if (error){
+                return res.redirect('/error?status=Internal Server Error')
+            }
+            return res.redirect('/home?message=Following '+username);
+        });
 
     });
 
