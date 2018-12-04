@@ -12,7 +12,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         
         <title>MusicShare</title>
-        
+
+
     </head>
 	<body>        
         <nav>
@@ -25,31 +26,44 @@
             </div>
         </nav>
 
-        <br><div style="font-size: 10px; margin-left: 10%;color:blueviolet"><%= msg %></div><br>
-        <div class="left" style="font-size: 35px; margin-left: 10%;margin-top: 16px">
-            Main Feed
-        </div>
+        <br><br>
+        <h4 class="center grey-text text-darken-3">Create New Post</h4>
 
+        <br><br><br>
 
-        <form action="../controllers/search-controller" method="POST" id="search-form">
-            <div class="input-field right" style="width: 35%;margin-right: 10px">
-                <i class="material-icons prefix">search</i>
-                <input placeholder="" name="username" type="text" class="validate">
-                <label for="username">Search Users</label>
+        <form action="../controllers/post-controller" method="POST" id="post-form">
+            <div class="input-field" style="width:35%;margin:auto">
+                <input placeholder="" name="title" type="text" class="validate">
+                <label for="title">Title</label>
+            </div>
+            <br>
+            <div class="center">
+                <img src="img/spotify.png" width="300" heigth="400" alt="Copy Embed URL">
+            </div>
+            <br><br>
+            <div class="input-field" style="width:35%;margin:auto">
+                <textarea placeholder="" name="embedcode" class="materialize-textarea"></textarea>
+                <label for="embedcode">Song Embed Code</label>
+            </div>
+            <br>
+            <div class="input-field" style="width:35%;margin:auto">
+                    <textarea placeholder="" name="textdata" class="materialize-textarea"></textarea>
+                    <label for="textdata">Description</label>
             </div>
         </form>
-        <br><br><br><br>
-
+        <br><br>
         <div class="center">
-            <a class="waves-effect waves-light btn" href="/postform"><i class="material-icons right">add</i>Create Post</a>
+            <button class="btn waves-effect waves-light " form="post-form" type="submit">Post
+                <i class="material-icons right">check</i>
+            </button>
         </div>
 
-        <hr width="100%">
 
-
-        <script src="scripts/home.js"></script>
-
+        
         <!-- Compiled and minified JavaScript -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    
+        <script src="scripts/search.js"></script>
+
     </body>
 </html>

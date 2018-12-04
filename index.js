@@ -34,7 +34,7 @@ var loginController = require('./controllers/login-controller');
 var registerController = require('./controllers/register-controller');
 var searchController = require('./controllers/search-controller');
 var followController = require('./controllers/follow-controller');
-
+var postController = require('./controllers/post-controller');
 
 
 
@@ -292,11 +292,29 @@ app.get('/feeddata', (req, res) => {
         return res.redirect('/');
     }
 
-    return res.send('yooooo');
+
+
+    return res.send();
 
 });
 
 
+/*
+ * /postform get request
+ * 
+ */
+app.get('/postform', (req, res) => {
+    console.log('/postform get request')
+
+    if (!req.session.userid){
+        return res.redirect('/');
+    }
+
+
+
+    return res.render(path.join(__dirname+'/views/post.html'));
+
+});
 
 /*====================================================================
  *
@@ -310,7 +328,7 @@ app.post('/controllers/login-controller', loginController.login)
 app.post('/controllers/register-controller', registerController.register);
 app.post('/controllers/search-controller',searchController.search);
 app.post('/controllers/follow-controller',followController.follow);
-
+app.post('/controllers/post-controller', postController.post);
 
 
 
