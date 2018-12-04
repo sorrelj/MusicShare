@@ -122,7 +122,7 @@ app.get('/home', (req, res) => {
     if (req.query.code){
         req.session.spotifyCode = req.query.code;
 
-        var redirect_uri = 'http://localhost:8000/home';
+        var redirect_uri = 'https://musicshare.azurewebsites.net/home';
 
         var authOptions ={
             url: 'https://accounts.spotify.com/api/token',
@@ -239,7 +239,7 @@ app.get('/spotifylogin', (req, res) => {
     }
     
     var scopes = 'user-read-private user-read-email';
-    var redirect_uri = 'http://localhost:8000/home';
+    var redirect_uri = 'https://musicshare.azurewebsites.net/home';
 
     res.redirect('https://accounts.spotify.com/authorize' +
         '?response_type=code' +
@@ -370,6 +370,7 @@ app.post('/controllers/post-controller', postController.post);
  * App listen port: 8000
  * 
  */
-app.listen(8000, () => {
-    console.log("App started on port: 8000")
+var port = process.env.PORT || 8000;
+app.listen(port, () => {
+    console.log("App started on port: "+port)
 });
