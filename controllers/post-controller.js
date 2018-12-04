@@ -22,7 +22,7 @@ module.exports.post = function(req,res){
     }
     
 
-    connection.query('INSERT INTO users SET ?',postData, function(error,results,fields){
+    connection.query('INSERT INTO posts SET ?',postData, function(error,results,fields){
         if (error){
             return res.redirect('/error?status=Internal Server Error')
         }

@@ -292,9 +292,17 @@ app.get('/feeddata', (req, res) => {
         return res.redirect('/');
     }
 
+    //get user friends
+    connection.query('SELECT friends from users where id=?',req.session.userid, function(error,results,fields){
+        if (results[0].friends == null){
+            return res.send('404');
+        }else{
 
+        }
 
-    return res.send();
+    });
+
+    
 
 });
 
