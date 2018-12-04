@@ -3,6 +3,10 @@ const app = express();
 const path = require('path')
 var session = require('express-session')
 var bodyParser = require('body-parser');
+var request = require('request');
+var con = require('./connection.js');
+
+var connection = con.connection;
 
 require('dotenv').config();
 
@@ -11,9 +15,12 @@ app.engine('html',require('ejs').renderFile)
 app.set('view engine','html');
 app.use(session({
   secret: process.env.SESSION_SECRET,
-  resave: false,
+  resave: true,
   saveUninitialized: true,
-  cookie: { maxAge: 3600000 }
+  cookie: { 
+      maxAge: 3600000,
+      secure: false
+  }
 }))
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
@@ -109,9 +116,65 @@ app.get('/home', (req, res) => {
         return res.redirect('/');
     }
 
+    //console.log(req.session)
+
+
     if (req.query.code){
         req.session.spotifyCode = req.query.code;
+
+        var redirect_uri = 'http://localhost:8000/home';
+
+        var authOptions ={
+            url: 'https://accounts.spotify.com/api/token',
+            form: {
+                code: req.query.code,
+                grant_type: 'authorization_code',
+                redirect_uri: redirect_uri
+            },
+            headers: {
+                Authorization: 'Basic ' + (new Buffer(process.env.SPOTIFY_ID + ':' + process.env.SPOTIFY_SECRET).toString('base64'))
+            },
+            json: true
+        }
+
+        //0 = error
+        //1 = good set username
+        var flag = 0;
+        var spotifyToken;
+        var display_name;
+
+        request.post(authOptions, function(error, response, body){
+            var token = body.access_token;
+            //console.log('Token: ' + token)
+
+            spotifyToken = token;
+
+            var options ={
+                url: 'https://api.spotify.com/v1/me',
+                headers: {
+                    Authorization: 'Bearer ' + token
+                },
+                json: true
+            };
+
+            var uid = req.session.userid;
+
+            request.get(options, function(error,response,body){
+                display_name = body.display_name;
+
+                connection.query('UPDATE users SET spotify_username = ? WHERE id=?', [display_name, uid], function (err,results,fields){
+                    if (err){
+                        console.log(err);
+                    }
+                    //console.log('added')
+                });
+            });            
+
+        });
+        
+
     }
+
 
     return res.render(path.join(__dirname+'/views/home.html'))
 
@@ -158,13 +221,18 @@ app.get('/error', (req, res) => {
  * 
  */
 app.get('/spotifylogin', (req, res) => {
+
+    if (!req.session.userid){
+        console.log('user not authorized');
+        return res.redirect('/');
+    }
     
     var scopes = 'user-read-private user-read-email';
     var redirect_uri = 'http://localhost:8000/home';
 
     res.redirect('https://accounts.spotify.com/authorize' +
         '?response_type=code' +
-        '&client_id=' + process.env.SPOTIFY_SECRET +
+        '&client_id=' + process.env.SPOTIFY_ID +
         (scopes ? '&scope=' + encodeURIComponent(scopes) : '') +
         '&redirect_uri=' + encodeURIComponent(redirect_uri)
     );
