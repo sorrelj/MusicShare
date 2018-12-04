@@ -12,7 +12,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         
         <title>MusicShare</title>
-        
+
+
     </head>
 	<body>        
         <nav>
@@ -25,25 +26,13 @@
             </div>
         </nav>
 
-        <br><br>
-        <div class="left" style="font-size: 35px; margin-left: 10%;margin-top: 16px">
-            Main Feed
+        <div id="addData">
+
         </div>
 
-        <form action="../controllers/search-controller" method="POST" id="search-form">
-            <div class="input-field right" style="width: 35%;margin-right: 10px">
-                <i class="material-icons prefix">search</i>
-                <input placeholder="" name="username" type="text" class="validate">
-                <label for="username">Search Users</label>
-            </div>
-        </form>
-        <br><br><br><br>
 
-        <hr width="100%">
-
-        
-
-        <script src="scripts/home.js"></script>
+        <div id="searchData" style="visibility: hidden"><%= searchdata %></div>
+        <script src="scripts/search.js"></script>
 
         <!-- Compiled and minified JavaScript -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>

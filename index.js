@@ -32,7 +32,7 @@ app.use(bodyParser.json());
  */
 var loginController = require('./controllers/login-controller');
 var registerController = require('./controllers/register-controller');
-
+var searchController = require('./controllers/search-controller');
 
 
 
@@ -240,6 +240,30 @@ app.get('/spotifylogin', (req, res) => {
 
 });
 
+/*
+ * /searchuser get request
+ * 
+ */
+app.get('/searchuser', (req, res) => {
+
+    if (!req.session.userid){
+        return res.redirect('/');
+    }
+
+    if (req.query.status != null && req.query.status != '200'){
+        //user alread exists
+        if (req.query.status == '404'){
+            var pth = path.join(__dirname+'/views/search.html');
+            return res.render(pth,
+            {
+                searchdata: '404'
+            });
+        }
+    }
+
+
+});
+
 
 /*====================================================================
  *
@@ -251,7 +275,7 @@ app.get('/spotifylogin', (req, res) => {
 //login
 app.post('/controllers/login-controller', loginController.login)
 app.post('/controllers/register-controller', registerController.register);
-
+app.post('/controllers/search-controller',searchController.search);
 
 
 
