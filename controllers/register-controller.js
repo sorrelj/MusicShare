@@ -43,12 +43,18 @@ module.exports.register = function(req,res){
     var currDate = new Date();
     mykey.update(req.body.password,'utf8','hex');
     encStr = mykey.final('hex');
+
+    var friendData = [req.body.user_name];
+
+    
+
     var user = {
         "first_name":req.body.first_name,
         "last_name":req.body.last_name,
         "user_name":req.body.user_name,
         "password":encStr,
-        "created":currDate
+        "created":currDate,
+        "friends":JSON.stringify(friendData)
     }
 
     var runsql = 'SELECT user_name FROM users WHERE user_name = \''+req.body.user_name+'\'';

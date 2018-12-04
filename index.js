@@ -297,6 +297,29 @@ app.get('/feeddata', (req, res) => {
         if (results[0].friends == null){
             return res.send('404');
         }else{
+            var data = JSON.parse(results[0].friends);
+            var i;
+            var newSQL = 'SELECT id from users where user_name ="';
+            for (i = 0; i < data.length; i++){
+                newSQL = newSQL + data[i] + '"';
+                if (i != data.length-1){
+                    newSQL = newSQL + ' OR user_name="';
+                }
+            }
+
+            connection.query(newSQL,function(error,results,fields){
+                var finalSQL = 'SELECT textData,spotify,title,user from posts where id=';
+                for(i = 0; i < results.length; i ++){
+                    finalSQL = finalSQL + results[i].id;
+                    if (i != results.length-1){
+                        finalSQL = finalSQL + ' OR id=';
+                    }
+                }
+                finalSQL = finalSQL + ' ORDER BY created DESC';
+                connection.query(finalSQL,function(error,results,fields){
+                    return res.send(results);
+                });
+            });
 
         }
 
