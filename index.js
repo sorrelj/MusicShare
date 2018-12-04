@@ -261,6 +261,11 @@ app.get('/searchuser', (req, res) => {
         }
     }
 
+    var pth = path.join(__dirname+'/views/search.html');
+    return res.render(pth,
+    {
+        searchdata: req.query.username
+    });
 
 });
 

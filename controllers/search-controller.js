@@ -14,7 +14,7 @@ module.exports.search = function(req,res){
 
     var username = req.body.username;
 
-    var runsql = 'SELECT user_name FROM users WHERE user_name = \''+req.body.user_name+'\'';
+    var runsql = 'SELECT user_name FROM users WHERE user_name = \''+username+'\'';
 
     connection.query(runsql, function(error,results,fields){
         if (error){
@@ -26,14 +26,7 @@ module.exports.search = function(req,res){
         if (results.length == 0){
             return res.redirect('/searchuser?status=404');
         }else{
-            // connection.query('INSERT INTO users SET ?', user, function (err,results1,fields1){
-            //     if (err){
-            //         console.log(err);
-            //         return res.redirect('/error?status=Internal 3Server Error')
-            //     }
-
-            //     return res.redirect('/?status=200');
-            // });
+            return res.redirect('/searchuser?status=200&username='+username);
         }
 
     });
