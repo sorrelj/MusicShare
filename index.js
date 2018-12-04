@@ -111,7 +111,6 @@ app.get('/home', (req, res) => {
 
     if (req.query.code){
         req.session.spotifyCode = req.query.code;
-        console.log('set code : '+ req.session.spotifyCode)
     }
 
     return res.render(path.join(__dirname+'/views/home.html'))
