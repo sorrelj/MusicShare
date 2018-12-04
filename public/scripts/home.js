@@ -2,7 +2,7 @@ var postArea = document.getElementById('postArea');
 
 const http = new XMLHttpRequest();
 
-const url = 'http://localhost:8000/feeddata';
+const url = 'https://musicshare.azurewebsites.net/feeddata';
 http.open("GET", url);
 http.send();
 
