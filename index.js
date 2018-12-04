@@ -13,7 +13,7 @@ app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true,
-  cookie: { maxAge: 60000 }
+  cookie: { maxAge: 3600000 }
 }))
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
@@ -25,6 +25,7 @@ app.use(bodyParser.json());
  */
 var loginController = require('./controllers/login-controller');
 var registerController = require('./controllers/register-controller');
+
 
 
 
@@ -108,6 +109,11 @@ app.get('/home', (req, res) => {
         return res.redirect('/');
     }
 
+    if (req.query.code){
+        req.session.spotifyCode = req.query.code;
+        console.log('set code : '+ req.session.spotifyCode)
+    }
+
     return res.render(path.join(__dirname+'/views/home.html'))
 
 });
@@ -146,6 +152,25 @@ app.get('/error', (req, res) => {
         }
         );
     }
+});
+
+/*
+ * /spotifylogin get request
+ * 
+ */
+app.get('/spotifylogin', (req, res) => {
+    
+    var scopes = 'user-read-private user-read-email';
+    var redirect_uri = 'http://localhost:8000/home';
+
+    res.redirect('https://accounts.spotify.com/authorize' +
+        '?response_type=code' +
+        '&client_id=' + process.env.SPOTIFY_SECRET +
+        (scopes ? '&scope=' + encodeURIComponent(scopes) : '') +
+        '&redirect_uri=' + encodeURIComponent(redirect_uri)
+    );
+
+
 });
 
 
